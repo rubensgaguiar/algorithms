@@ -142,14 +142,53 @@ N = (q-p) * L2
 
 L2 > 0; q > p > 0 => N exists.
 
-So, after several steps, we must to find and N that satisfies our encounter condition.
+In a more generic way, we can do:
 
+slower_position = N = L1 + x + p*L2
 
+faster_position = 2 * N = L1 + x + q*L2
 
+=> subtraction <=
 
+N = (q-p) * L2
 
+L2 > 0; q > p > 0 => N exists.
 
+So, the encouter point can happen in any point inside cycle.
 
+Moreover, after several steps, we must to find and N that satisfies our encounter condition. Therefore, we must to find the entry of cycle to return in our function.
 
+But, we know that:
 
+L1: distance to entry point
+L2: distance of entry point to meeting point
+L3: length of cycle
 
+But, we know that the faster pointer travels 2 times more faster than slower pointer, then, we have:
+
+Distance Traveled of Faster = 2 * (L1 + L2)
+
+or
+
+Distance Traveled of Faster = L1 + L2 + n * C
+
+So,
+
+2 * (L1 + L2) = L1 + L2 + n * C
+L1 = n * C - L2
+
+So, moves the entry pointer and the slower point after the meet occours one step each time:
+
+Initial:
+entry_pos = 0
+slower_pos = L1 + L2
+
+After L1 steps:
+entry_pos = L1
+slower_pos = 2 * L1 + L2 = 2 * n * C - 2 * L2 + L2 = 2 * n * C - L2
+
+But 2 * n * C means that the slower point returns to the meeting point:
+
+slower_pos = L1 + L2 - L2 = L1
+
+So, after L1 steps, slower_pos == entry_pos, therefore we find the entry point of cycle.
