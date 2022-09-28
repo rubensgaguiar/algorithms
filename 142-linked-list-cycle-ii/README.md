@@ -29,11 +29,127 @@ Explanation: There is no cycle in the linked list.
 
 Follow up: Can you solve it using O(1) (i.e. constant) memory?
 
-## Solution with follow up
+## Solution without follow up
 
 In this case, we have:
 
-3 -> 2 -> 0 -> 4 -> (2)
+3 -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2)
+
+So, we will create a dict that will store the nodes of list and we will iterate in linked list.
+
+In iteration we will verify if the node already is in dict. If not, we must add this node. If yes, we return this node because we have a repeated node, this only happen when we have an cycle.
+
+So, we must to do:
+
+1) Iteration
+
+```
+dict = {}
+
+list = 3 -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2)
+
+list in dict ? false
+```
+
+2) Iteration
+
+```
+dict = {
+  3 -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+}
+
+2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2)
+
+list in dict ? false
+```
+
+3) Iteration
+
+```
+dict = {
+  3 -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+  2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+}
+
+0 -> 4 -> 2 -> 0 -> 4 -> (2)
+
+list in dict ? false
+```
+
+4) Iteration
+
+```
+dict = {
+  3 -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+  2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+  0 -> 4 -> 2 -> 0 -> 4 -> (2),
+}
+
+4 -> 2 -> 0 -> 4 -> (2)
+
+list in dict ? false
+```
+
+5) Iteration
+
+```
+dict = {
+  3 -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+  2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2),
+  0 -> 4 -> 2 -> 0 -> 4 -> (2),
+  4 -> 2 -> 0 -> 4 -> (2),
+}
+
+2 -> 0 -> 4 -> (2)
+
+list in dict ? true => return list 
+```
+
+This solution is O(N) in time and space.
+
+## Solution with follow up
+
+We will create a slow pointer and a faster pointer, the slower pointer will walk through the list with one by one steps, the faster pointer will walk through the list with two by two steps.
+
+[]: slower
+{}: faster
+
+- [{3}] -> 2 -> 0 -> 4 -> 2 -> 0 -> 4 -> (2)
+- 3 -> [2] -> {0} -> 4 -> 2 -> 0 -> 4 -> (2)
+- 3 -> 2 -> [0] -> 4 -> {2} -> 0 -> 4 -> (2)
+- 3 -> 2 -> 0 -> [4] -> 2 -> 0 -> {4} -> (2)
+- 3 -> 2 -> {0} -> 4 -> [2] -> 0 -> 4 -> (2)
+- 3 -> 2 -> 0 -> 4 -> {2} -> [0] -> 4 -> (2)
+- 3 -> 2 -> 0 -> 4 -> 2 -> 0 -> [{4}] -> (2) => CYCLE = faster.next
+- 3 -> [2] -> {0} -> 4 -> 2 -> 0 -> 4 -> (2)
+- 3 -> 2 -> [0] -> 4 -> {2} -> 0 -> 4 -> (2)
+
+This happens because:
+
+- The distance to the entry of cycle is L1
+- The length of cycle is L2
+- The length of list without cycles is L1 + L2
+
+So, after N steps we have:
+
+slower_position = N = L1 + p*L2
+
+faster_position = 2 * N = L1 + q*L2
+
+=> subtraction <=
+
+N = (q-p) * L2
+
+L2 > 0; q > p > 0 => N exists.
+
+So, after several steps, we must to find and N that satisfies our encounter condition.
+
+
+
+
+
+
+
 
 
 

@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -6,18 +8,16 @@
 
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        c = 1
-        sublist = head.next
-
+        arr = defaultdict(lambda: None)
+        
+        i = 0
+        sublist = head
         while sublist != None:
-            tmp_head = head
-            for i in range(c):
-                if tmp_head == sublist:
-                    return i
-
-                tmp_head = tmp_head.next
-
-            c += 1
+            tmp_val = arr[sublist]
+            if sublist == tmp_val:
+                return sublist
+            arr[sublist] = sublist
             sublist = sublist.next
+            i += 1
 
-        return -1
+        return None
