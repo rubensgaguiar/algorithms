@@ -146,3 +146,7 @@ min = 3
 min = 3
 
 () - min = 4 - 3 = 1 => max_price = 20
+
+So, as we can see, we will store the min value while we iterate in list and while we calculate the max price until each step of iteration.
+
+Because this we will can calculate the difference between each element and the minimum price before then and save this as our maximum price and if through iteration we find a value that replace the actual minimum price, all the next price difference will can be compared with our actual maximum price difference.
