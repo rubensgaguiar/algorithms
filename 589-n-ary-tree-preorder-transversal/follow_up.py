@@ -6,6 +6,7 @@ class Node:
         self.children = children
 """
 
+
 class Solution:
     def preorder(self, root: 'Node') -> List[int]:
         order = []
