@@ -36,13 +36,16 @@ Lets consider this tree:
 ```
 Tree: 
 
+max = None
+min = None
+
 2
 -----
 |   |
 1   3
 ```
 
-We must to validate if the children of root element satisfies the valid BST condition. If yes, we must to take each children and pass then as root to another isValidBST verification. So, doing that, we have:
+We must to validate if the children of root element satisfies the valid BST condition. If yes, we must to take each children and pass then as root to another isValidBST verification. Moreover, we must to define an minimum and maximum value to each Tree when we we analyze it. So, doing that, we have:
 
 1. Verify if children satisfies the conditions:
 
@@ -54,7 +57,10 @@ root < right => 2 < 3 => OK
 2. Children as root:
 
 ```
-Tree: 
+Tree:
+
+max = 2
+min = None
 
 1
 ```
@@ -66,6 +72,9 @@ Don't have any children => return True.
 ```
 Tree: 
 
+max = None
+min = 2
+
 3
 ```
 
@@ -76,12 +85,15 @@ Don't have any children => return True.
 When all children returns True and all conditions are satisfied, the tree is valid!
 
 
-**First Case**
+**Second Case**
 
 Lets consider this tree:
 
 ```
 Tree: 
+
+max = None
+min = None
 
 5
 -----
@@ -100,3 +112,77 @@ root < right => 5 < 4 => FALSE
 ```
 
 One of conditions is False, so this Tree isn't valid, in this case return False.
+
+**Thirdy Case**
+
+1. Lets consider this tree:
+
+```
+Tree: 
+
+max = None
+min = None
+
+
+5
+-----
+|   |
+1   6
+    -----
+    |   |
+    3   7
+```
+
+```
+root > left  => 5 > 1 => OK
+root < right => 5 < 6 => OK
+```
+
+2. root->left
+
+```
+Tree: 
+
+max = 5
+min = None
+
+1
+```
+No children => OK.
+
+3. root->right
+```
+Tree: 
+
+max = None
+min = 5
+
+
+6
+-----
+|   |
+3   7
+```
+
+```
+root > left  => 6 > 3 => OK
+root < right => 6 < 7 => OK
+if min => root > min => 6 > 5 => OK
+```
+
+4. root->right->left
+```
+Tree: 
+
+max = None
+min = 5
+
+
+3
+```
+
+```
+if min => root > min => 3 > 5 => FALSE
+```
+
+This Tree doesn't satisfies min value, so return False.

@@ -5,16 +5,23 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def verifyConditions(self, root: Optional[TreeNode]) -> bool:
-        if root.left and root.val <= root.left.val or root.right and root.val >= root.right.val:
-            return False
+    def verifyConditions(self, root: Optional[TreeNode], maximum, minimum) -> bool:
+        invalid_conditions = root.left and root.val <= root.left.val or \
+            root.right and root.val >= root.right.val or \
+            maximum and root.val >= maximum or \
+            minimum and root.val <= minimum
 
-        return True
+        return not invalid_conditions
+
+    
+    def validateBST(self, root: Optional[TreeNode], maximum=None, minimum=None):
+        if self.verifyConditions(root, maximum, minimum):
+            invalid_bst = root.left and not self.validateBST(root.left, maximum=root.val, minimum=minimum) or \
+                root.right and not self.validateBST(root.right, maximum=maximum, minimum=root.val)
+
+            return not invalid_bst
+
+        return False
 
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        if self.verifyConditions(root):
-            if root.left and not self.isValidBST(root.left) or \
-                root.right and not self.isValidBST(root.right):
-                return False
-
-            return True
+        return self.validateBST(root)
